@@ -6,7 +6,7 @@
 /*   By: georgii <georgii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:45:09 by georgii           #+#    #+#             */
-/*   Updated: 2022/09/04 17:10:48 by georgii          ###   ########.fr       */
+/*   Updated: 2022/09/11 18:23:18 by georgii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #define mapHeight 24
 #define screenWidth 640
 #define screenHeight 480
+#define texWidth 64
+#define texHeight 64
 
 #define green 0x0000FF00
 #define blue 0x000000FF
@@ -33,6 +35,7 @@
 #include "../minilibx-opengl/mlx.h"
 #include "../libft/libft.h"
 
+
 typedef struct s_geom
 {
 	double	posX;
@@ -43,6 +46,8 @@ typedef struct s_geom
 	double	planeY;
 	double	moveSpeed;
 	double	rotSpeed;
+	int		textureHeight;
+	int		textureWidth;
 
 }	t_geom;
 
@@ -61,6 +66,10 @@ typedef struct	s_data {
 	void	*mlx_win;
 	t_img	img_data;
 	t_geom	geom_data;
+	t_img	texNorth;
+	// t_img	texSouth;
+	// t_img	texEast;
+	// t_img	texWest;
 	
 	int		floor_color;
 	int		ceeling_color;

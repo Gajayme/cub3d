@@ -6,7 +6,7 @@
 /*   By: georgii <georgii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 20:52:09 by georgii           #+#    #+#             */
-/*   Updated: 2022/09/11 15:56:31 by georgii          ###   ########.fr       */
+/*   Updated: 2022/09/11 17:51:02 by georgii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,46 +143,6 @@ void walls (t_geom *geom_data, t_img *img_data)
         //choose wall color
         int color;
         color_picker(&color, side, rayDirX, rayDirY);
-        
-        // if (side == 0){
-        //   if (rayDirX >= 0){
-        //     color = red;
-        //   } else {
-        //     color = blue
-        //   }
-        // }
-        
-        // if (rayDirX >= 0){
-        //   if (side == 0)
-        //     color = red;
-        //   else {
-        //     if (rayDirY > 0 )
-        //       color = yellow;
-        //     else
-        //       color = green;
-        //   }
-        // } else{
-        //   if (side == 0)
-        //     color = blue;
-        //   else{
-        //     if (rayDirY > 0 )
-        //       color = yellow;
-        //     else
-        //       color = green;
-        //   }
-        // }     
-        // switch(worldMap[mapX][mapY])
-        // {
-        //     case 1:  color = red;    break; //red
-        //     case 2:  color = green;  break; //green
-        //     case 3:  color = blue;   break; //blue
-        //     case 4:  color = white;  break; //white
-        //     default: color = yellow; break; //yellow
-        // }
-        // if (side == 1)
-        // {
-        //   color /= 2; 
-        // }
         vertical_line(img_data, x, drawStart, drawEnd, color);
   } 
 }

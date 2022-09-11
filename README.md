@@ -6,7 +6,7 @@ My first RayCaster with miniLibX
 
 TODO GAJAYME
 
-1) refactor everything
-2) floor, ceeling
-3) color packing from 3 colors
-4) how to measure time???
+refactor everything
+how to measure time???
+
+TEXTURES
