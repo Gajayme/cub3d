@@ -75,9 +75,7 @@ int texture_picker(int side, double rayDirX, double rayDirY){
       return 3;
 }
 
-
-
-void walls (t_geom *geom_data, t_img *img_data)
+void walls (t_geom *geom_data, t_img *img_data, t_img *textures)
 {
     for(int x = 0; x < screenWidth; x++)
     {
@@ -156,12 +154,47 @@ void walls (t_geom *geom_data, t_img *img_data)
         if(drawEnd >= screenHeight) drawEnd = screenHeight - 1;
     
         //choose wall color
-        int color;
-        color_picker(&color, side, rayDirX, rayDirY);
+        //int color;
+        //color_picker(&color, side, rayDirX, rayDirY);
 
-        //t_img *texture = texture_picker(side, rayDirX, rayDirY);
+        int texNum = texture_picker(side, rayDirX, rayDirY);
 
+        //calculate value of wallX
+        double wallX; //where exactly the wall was hit
+        if (side == 0)
+            wallX = geom_data->posY + perpWallDist * rayDirY;
+        else
+            wallX = geom_data->posX + perpWallDist * rayDirX;
+        wallX -= floor((wallX));
 
-        vertical_line(img_data, x, drawStart, drawEnd, color);
+        //CALCULATING TEXTURE X
+
+        //x coordinate on the texture
+        int texX = (int)(wallX * (double)(geom_data->textureWidth));
+        if(side == 0 && rayDirX > 0)
+            texX = geom_data->textureWidth - texX - 1;
+        if(side == 1 && rayDirY < 0)
+            texX = geom_data->textureWidth - texX - 1;
+
+        // How much to increase the texture coordinate per screen pixel
+        //Коэффициент соответствия пикселя картинки пикселям линии на экране
+        double step = 1.0 * geom_data->textureHeight / lineHeight;
+        // Starting texture coordinate
+        double texPos = (drawStart - screenHeight / 2 + lineHeight / 2) * step;
+        for(int y = drawStart; y<drawEnd; ++y)
+        {
+            // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+            int texY = (int)texPos & (texHeight - 1);
+            texPos += step;
+            char *dst = textures[texNum].addr + ((texY * texHeight * textures[texNum].line_length)
+                    + (texX * (textures[texNum].bits_per_pixel / 8)));
+            //int color = textures[texNum].addr[texHeight * texY + texX];
+            int color = *(unsigned int*)dst;
+            //printf("color = %d\n", color);
+            //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+            my_mlx_pixel_put(img_data->img, x, y, color);
+        }
+
+        //vertical_line(img_data, x, drawStart, drawEnd, color);
   } 
 }

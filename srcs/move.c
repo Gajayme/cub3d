@@ -17,7 +17,7 @@
 extern int worldMap[mapWidth][mapHeight];
 
 
-void move_forvard(t_geom *geom_data)
+void move_forward(t_geom *geom_data)
 {   
     if(worldMap[(int)(geom_data->posX + geom_data->dirX * geom_data->moveSpeed)][(int)geom_data->posY] ==  0)
     {    

@@ -21,7 +21,7 @@ int	red_cross()
 int	key_hook(int keycode, t_data *data)
 {
 	if (keycode == 13)
-		move_forvard(&data->geom_data);
+		move_forward(&data->geom_data);
 	if (keycode == 1)
 		move_backward(&data->geom_data);
 	if (keycode == 0)

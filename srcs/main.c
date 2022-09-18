@@ -51,12 +51,12 @@ int	render_next_frame(t_data *data)
   img_init(data, &data->img_data, screenWidth, screenHeight);
   
   floor_ceiling(&data->img_data, data->floor_color, data->ceiling_color);
-  walls(&data->geom_data, &data->img_data);
+  walls(&data->geom_data, &data->img_data, data->tex);
   
   double frameTime = (clock() - start_t);
   double frameTimeSec =  frameTime / CLOCKS_PER_SEC;
-  printf("frame was drawn in : %f sec\n", frameTimeSec);
-  printf("fps =  : %f ms\n", 1 / frameTimeSec);
+  //printf("frame was drawn in : %f sec\n", frameTimeSec);
+  //printf("fps =  : %f ms\n", 1 / frameTimeSec);
   data->geom_data.moveSpeed = frameTimeSec * 150; //the constant value is in squares/second
   data->geom_data.rotSpeed = frameTimeSec * 100; //the constant value is in radians/second 
   
@@ -79,9 +79,9 @@ int main()
   geom_init(&data.geom_data);
   texture_init(&data);
 
-//  mlx_hook(data.mlx_win, 2, 1L << 0, key_hook, &data);
-//  mlx_hook(data.mlx_win, 17, 0, red_cross, &data);
-//  mlx_loop_hook(data.mlx, render_next_frame, &data);
+  mlx_hook(data.mlx_win, 2, 1L << 0, key_hook, &data);
+  mlx_hook(data.mlx_win, 17, 0, red_cross, &data);
+  mlx_loop_hook(data.mlx, render_next_frame, &data);
   mlx_loop(data.mlx);
   return (0);
 }

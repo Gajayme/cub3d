@@ -41,36 +41,38 @@ void geom_init(t_geom *geom_data)
 
 void texture_init(t_data *data){
     //north
-    img_init(data, &data->tex[1], data->geom_data.textureWidth, data->geom_data.textureHeight);
-    data->tex[1].img = mlx_xpm_file_to_image(data->mlx, "textures/wood.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
+    //img_init(data, &data->tex[1], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[1].img = mlx_xpm_file_to_image(data->mlx, "textures/north.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
     if (!data->tex[1].img){
         ft_putstr_fd("texture_init\n", 2);
         exit (1);
     }
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[1].img, 0, 0);
+    //mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[1].img, 0, 0);
     //south
-    img_init(data, &data->tex[0], data->geom_data.textureWidth, data->geom_data.textureHeight);
-    data->tex[0].img = mlx_xpm_file_to_image(data->mlx, "textures/redbrick.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[0].img, texWidth, 0);
+    //img_init(data, &data->tex[0], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[0].img = mlx_xpm_file_to_image(data->mlx, "textures/south.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
+    //int color = mlx_get_color_value(data->mlx, data->tex[0].addr[20]);
+    //printf("color = %d\n", color);
     if (!data->tex[0].img){
         ft_putstr_fd("texture_init\n", 2);
         exit (1);
     }
+    //mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[0].img, texWidth, 0);
     //west
-    img_init(data, &data->tex[3], data->geom_data.textureWidth, data->geom_data.textureHeight);
-    data->tex[3].img = mlx_xpm_file_to_image(data->mlx, "textures/pillar.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[3].img, texWidth * 2, 0);
+    //img_init(data, &data->tex[3], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[3].img = mlx_xpm_file_to_image(data->mlx, "textures/west.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
     if (!data->tex[3].img){
         ft_putstr_fd("texture_init\n", 2);
         exit (1);
     }
+    //mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[3].img, texWidth * 2, 0);
     //east
-    img_init(data, &data->tex[2], data->geom_data.textureWidth, data->geom_data.textureHeight);
-    data->tex[2].img = mlx_xpm_file_to_image(data->mlx, "textures/purplestone.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[2].img, texWidth * 3, 0);
+    //img_init(data, &data->tex[2], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[2].img = mlx_xpm_file_to_image(data->mlx, "textures/east.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
     if (!data->tex[2].img){
         ft_putstr_fd("texture_init\n", 2);
         exit (1);
     }
+    //mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[2].img, texWidth * 3, 0);
 }
 
