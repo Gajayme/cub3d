@@ -66,19 +66,21 @@ typedef struct	s_data {
 	void	*mlx_win;
 	t_img	img_data;
 	t_geom	geom_data;
-	t_img	texNorth;
-	// t_img	texSouth;
-	// t_img	texEast;
-	// t_img	texWest;
+
+    t_img	tex[4]; // 0 - south 1 - north 2 - east 3 - west
+    // t_img	texSouth;
+//	t_img	texEast;
+//	t_img	texWest;
 	
 	int		floor_color;
-	int		ceeling_color;
+	int		ceiling_color;
 
 }	t_data;
 
 void	geom_init(t_geom *geom_data);
 int		create_trgb(int t, int r, int g, int b);
 void	img_init(t_data *data, t_img *img_data, size_t width, size_t height);
+void    texture_init(t_data *data);
 
 int		red_cross();
 void	move_forvard(t_geom *geom_data);
@@ -89,5 +91,5 @@ int		key_hook(int keycode, t_data *data);
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void	walls(t_geom *geom_data, t_img *img_data);
-void 	floor_ceeling(t_img *img, int f_color, int c_color);
+void 	floor_ceiling(t_img *img, int f_color, int c_color);
 #endif

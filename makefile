@@ -42,7 +42,7 @@ else
 endif
 
 .c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o} ${INC}
+	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o} ${INC}
 
 ${NAME}: ${OBJS} ft mlx
 		@echo "\033[35m-= Making Cub3D... =-"

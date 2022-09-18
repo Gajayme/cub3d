@@ -50,7 +50,7 @@ int	render_next_frame(t_data *data)
 
   img_init(data, &data->img_data, screenWidth, screenHeight);
   
-  floor_ceeling(&data->img_data, data->floor_color, data->ceeling_color);
+  floor_ceiling(&data->img_data, data->floor_color, data->ceiling_color);
   walls(&data->geom_data, &data->img_data);
   
   double frameTime = (clock() - start_t);
@@ -72,24 +72,16 @@ int main()
 
   data.mlx = mlx_init();
   
-  data.ceeling_color = create_trgb(0, 1, 1, 100);
+  data.ceiling_color = create_trgb(0, 1, 1, 100);
   data.floor_color = create_trgb(0, 100, 100, 100);
   
   data.mlx_win = mlx_new_window(data.mlx, screenWidth, screenHeight, "Cub3D");
   geom_init(&data.geom_data);
+  texture_init(&data);
 
-  // here im trying to properly download texture img
-  
-  // img_init(&data, &data.texNorth, data.geom_data.textureWidth, data.geom_data.textureHeight);
-  // data.texNorth.img = mlx_xpm_file_to_image(data.mlx, "textures/wood.xpm", &data.geom_data.textureWidth, &data.geom_data.textureHeight);
-  // printf("%lu\n", sizeof(data.texNorth.img));
-  // mlx_put_image_to_window(data.mlx, data.mlx_win, data.texNorth.img, 0, 0);
-  
-  //end of trying
-  
-  mlx_hook(data.mlx_win, 2, 1L << 0, key_hook, &data);
-	mlx_hook(data.mlx_win, 17, 0, red_cross, &data);
-  mlx_loop_hook(data.mlx, render_next_frame, &data);    
+//  mlx_hook(data.mlx_win, 2, 1L << 0, key_hook, &data);
+//  mlx_hook(data.mlx_win, 17, 0, red_cross, &data);
+//  mlx_loop_hook(data.mlx, render_next_frame, &data);
   mlx_loop(data.mlx);
   return (0);
 }

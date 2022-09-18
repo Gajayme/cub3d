@@ -23,7 +23,7 @@ void  vertical_line(t_img *img, int x, int y_low, int y_high, int color)
   }
 }
 
-void floor_ceeling(t_img *img, int f_color, int c_color)
+void floor_ceiling(t_img *img, int f_color, int c_color)
 {
   int height;
   int width;
@@ -61,6 +61,21 @@ void color_picker(int *color, int side, double rayDirX, double rayDirY){
     *color = green;
   
 }
+
+int texture_picker(int side, double rayDirX, double rayDirY){
+  if (side == 0){
+    if (rayDirX >= 0) //south
+        return 0;
+    else //north
+        return 1;
+  }
+  if (rayDirY > 0 ) //east
+      return 2;
+  else //west
+      return 3;
+}
+
+
 
 void walls (t_geom *geom_data, t_img *img_data)
 {
@@ -143,6 +158,10 @@ void walls (t_geom *geom_data, t_img *img_data)
         //choose wall color
         int color;
         color_picker(&color, side, rayDirX, rayDirY);
+
+        //t_img *texture = texture_picker(side, rayDirX, rayDirY);
+
+
         vertical_line(img_data, x, drawStart, drawEnd, color);
   } 
 }

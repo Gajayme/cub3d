@@ -25,11 +25,6 @@ void  img_init(t_data *data, t_img *img_data, size_t width, size_t height)
 								&img_data->endian);
 }
 
-int	create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
 void geom_init(t_geom *geom_data)
 {
   geom_data->posX = 22; //22
@@ -42,4 +37,40 @@ void geom_init(t_geom *geom_data)
   geom_data->rotSpeed = 0;
   geom_data->textureHeight = texHeight;
   geom_data->textureWidth = texWidth;
-}  
+}
+
+void texture_init(t_data *data){
+    //north
+    img_init(data, &data->tex[1], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[1].img = mlx_xpm_file_to_image(data->mlx, "textures/wood.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
+    if (!data->tex[1].img){
+        ft_putstr_fd("texture_init\n", 2);
+        exit (1);
+    }
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[1].img, 0, 0);
+    //south
+    img_init(data, &data->tex[0], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[0].img = mlx_xpm_file_to_image(data->mlx, "textures/redbrick.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[0].img, texWidth, 0);
+    if (!data->tex[0].img){
+        ft_putstr_fd("texture_init\n", 2);
+        exit (1);
+    }
+    //west
+    img_init(data, &data->tex[3], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[3].img = mlx_xpm_file_to_image(data->mlx, "textures/pillar.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[3].img, texWidth * 2, 0);
+    if (!data->tex[3].img){
+        ft_putstr_fd("texture_init\n", 2);
+        exit (1);
+    }
+    //east
+    img_init(data, &data->tex[2], data->geom_data.textureWidth, data->geom_data.textureHeight);
+    data->tex[2].img = mlx_xpm_file_to_image(data->mlx, "textures/purplestone.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->tex[2].img, texWidth * 3, 0);
+    if (!data->tex[2].img){
+        ft_putstr_fd("texture_init\n", 2);
+        exit (1);
+    }
+}
+
