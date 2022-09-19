@@ -179,20 +179,14 @@ void walls (t_geom *geom_data, t_img *img_data, t_img *textures)
         // How much to increase the texture coordinate per screen pixel
         //Коэффициент соответствия пикселя картинки пикселям линии на экране
         double step = 1.0 * geom_data->textureHeight / lineHeight;
-        // Starting texture coordinate
         double texPos = (drawStart - screenHeight / 2 + lineHeight / 2) * step;
         for(int y = drawStart; y<drawEnd; ++y)
         {
-            // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
             int texY = (int)texPos & (texHeight - 1);
             texPos += step;
-            char *dst = textures[texNum].addr + ((texY * texHeight * textures[texNum].line_length)
-                    + (texX * (textures[texNum].bits_per_pixel / 8)));
-            //int color = textures[texNum].addr[texHeight * texY + texX];
-            int color = *(unsigned int*)dst;
-            //printf("color = %d\n", color);
-            //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-            my_mlx_pixel_put(img_data->img, x, y, color);
+            printf("%d, %d\n", texX, texY);
+            //int color = textures[texNum].addr[texHeight * texY + texX]
+            //my_mlx_pixel_put(img_data->img, x, y, color);
         }
 
         //vertical_line(img_data, x, drawStart, drawEnd, color);

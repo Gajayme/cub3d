@@ -11,7 +11,7 @@ ifeq ($(DB),1)
 	LIBS	= -L libft/ -lft ${MLX_LNK} -lm
 	MKBONUS	= DB=1 -C srcs/bonus
 else
-	CFLAGS	= -O2 -Wall -Wextra -Werror
+	CFLAGS	= -O2 #-Wall -Wextra -Werror
 	LIBS	= -L libft/ -lft ${MLX_LNK} -lm
 	MKBONUS	= -C srcs/bonus
 endif
