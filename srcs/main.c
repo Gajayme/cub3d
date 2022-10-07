@@ -66,23 +66,47 @@ int	render_next_frame(t_data *data)
   
 }
 
-int main()
+int main(int argc, char **argv)
 {
-  t_data	data;  
+  int i =-1, j = -1;
+  int     fd;
+  int     row_nmbr;
+  char		*path;
+  t_data	data;
+  t_parser  parser;
 
-  data.mlx = mlx_init();
+  path = argv[1];
+	fd = open_fd(path);
+  row_nmbr = parser_start(fd, &parser);
+  close(fd);
+	fd = open_fd(path);
+  parse_map(fd, &parser, row_nmbr);
+  close(fd);
+  while (parser.map[++i])
+  {
+    j = -1;
+    while (parser.map[i][++j] < 31)
+      printf ("%d", parser.map[i][j]);
+    printf("\n");
+  }
+  // data.mlx = mlx_init();
   
-  data.ceiling_color = create_trgb(0, 1, 1, 100);
-  data.floor_color = create_trgb(0, 100, 100, 100);
+  // data.ceiling_color = create_trgb(0, 1, 1, 100);
+  // data.floor_color = create_trgb(0, 100, 100, 100);
   
-  data.mlx_win = mlx_new_window(data.mlx, screenWidth, screenHeight, "Cub3D");
-  geom_init(&data.geom_data);
-  texture_init(&data);
+  // data.mlx_win = mlx_new_window(data.mlx, screenWidth, screenHeight, "Cub3D");
+  // geom_init(&data.geom_data);
+  // texture_init(&data);
 
-  mlx_hook(data.mlx_win, 2, 1L << 0, key_hook, &data);
-  mlx_hook(data.mlx_win, 17, 0, red_cross, &data);
-  mlx_loop_hook(data.mlx, render_next_frame, &data);
-  mlx_loop(data.mlx);
+  // mlx_hook(data.mlx_win, 2, 1L << 0, key_hook, &data);
+  // mlx_hook(data.mlx_win, 17, 0, red_cross, &data);
+  // mlx_loop_hook(data.mlx, render_next_frame, &data);
+  // mlx_loop(data.mlx);
+
+  free(parser.north);
+  free(parser.south);
+  free(parser.east);
+  free(parser.west);
   return (0);
 }
 

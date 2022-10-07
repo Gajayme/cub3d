@@ -31,6 +31,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 
 #include "../minilibx-opengl/mlx.h"
 #include "../libft/libft.h"
@@ -76,6 +78,25 @@ typedef struct	s_data {
 	int		ceiling_color;
 
 }	t_data;
+
+typedef struct s_parser {
+    char    *north;
+    char    *south;
+    char    *west;
+    char    *east;
+    int     **map;
+	int		min_len;
+    int     floor[3];
+    int     ceiling[3];
+}           t_parser;
+
+int		parser_start(int fd, t_parser *parser);
+int		parse_line(t_parser *parser, char *line, int *row_cnt);
+int 	parse_textures(char *line, t_parser *parser);
+int 	parse_fc(char *line, t_parser *parser);
+int		open_fd(char *path);
+int 	parse_map(int fd, t_parser *parser, int row_nmbr);
+int		parse_line_map(t_parser *parser, char *line, int *row_cnt);
 
 void	geom_init(t_geom *geom_data);
 int		create_trgb(int t, int r, int g, int b);

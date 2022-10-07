@@ -26,6 +26,7 @@ SRCS	=	srcs/main.c \
 			srcs/init.c \
 			srcs/draw.c \
 			srcs/move.c \
+			srcs/parser1.c \
 
 
 
