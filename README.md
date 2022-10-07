@@ -2,7 +2,7 @@
 
 ## Linux-build:
 
-```shell```
+```shell
 sudo apt-get install libxmu-dev libxmu-headers freeglut3-dev libxext-dev libxi-dev zlib1g-dev libbsd-dev
 ```
 
