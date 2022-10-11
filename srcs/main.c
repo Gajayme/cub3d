@@ -49,9 +49,10 @@ int	render_next_frame(t_data *data)
   start_t = clock(); 
 
   img_init(data, &data->img_data, screenWidth, screenHeight);
-  
+  mlx_put_image_to_window(data->mlx, data->mlx_win, data->north_tex->img, 0, 0);
+  sleep(1000);
   floor_ceiling(&data->img_data, data->floor_color, data->ceiling_color);
-  walls(&data->geom_data, &data->img_data, data->tex);
+  walls(&data->geom_data, &data->img_data);
   
   double frameTime = (clock() - start_t);
   double frameTimeSec =  frameTime / CLOCKS_PER_SEC;

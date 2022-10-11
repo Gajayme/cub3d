@@ -75,7 +75,11 @@ int texture_picker(int side, double rayDirX, double rayDirY){
       return 3;
 }
 
-void walls (t_geom *geom_data, t_img *img_data, t_img *textures)
+//int get_tex_color(t_img *img, int x, int y){
+//    return (*(int *)(img->addr + ((4 * texHeight * y) + (4 * x))));
+//}
+
+void walls (t_geom *geom_data, t_img *img_data)
 {
     for(int x = 0; x < screenWidth; x++)
     {
@@ -154,8 +158,8 @@ void walls (t_geom *geom_data, t_img *img_data, t_img *textures)
         if(drawEnd >= screenHeight) drawEnd = screenHeight - 1;
     
         //choose wall color
-        //int color;
-        //color_picker(&color, side, rayDirX, rayDirY);
+        int color;
+        color_picker(&color, side, rayDirX, rayDirY);
 
         int texNum = texture_picker(side, rayDirX, rayDirY);
 
@@ -182,13 +186,15 @@ void walls (t_geom *geom_data, t_img *img_data, t_img *textures)
         double texPos = (drawStart - screenHeight / 2 + lineHeight / 2) * step;
         for(int y = drawStart; y<drawEnd; ++y)
         {
-            int texY = (int)texPos & (texHeight - 1);
-            texPos += step;
-            printf("%d, %d\n", texX, texY);
-            //int color = textures[texNum].addr[texHeight * texY + texX]
+            //int texY = (int)texPos & (texHeight - 1);
+            //texPos += step;
+            //printf("%d, %d\n", texX, texY);
+            //int color = textures[texNum].addr[(4 * texHeight * y) + (4 * x)];
+            //int color = get_tex_color(&textures[0], x, y);
+            //printf("color = %d\n", color);
             //my_mlx_pixel_put(img_data->img, x, y, color);
         }
 
-        //vertical_line(img_data, x, drawStart, drawEnd, color);
+        vertical_line(img_data, x, drawStart, drawEnd, color);
   } 
 }

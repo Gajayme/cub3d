@@ -66,12 +66,7 @@ typedef struct	s_data {
 	void	*mlx_win;
 	t_img	img_data;
 	t_geom	geom_data;
-
-    t_img	tex[4]; // 0 - south 1 - north 2 - east 3 - west
-    // t_img	texSouth;
-//	t_img	texEast;
-//	t_img	texWest;
-	
+    t_img	*north_tex;
 	int		floor_color;
 	int		ceiling_color;
 
@@ -91,6 +86,6 @@ int		key_hook(int keycode, t_data *data);
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 // возможно стоит отправлять указатель на массив картинок текстур
-void	walls(t_geom *geom_data, t_img *img_data, t_img *textures);
+void	walls(t_geom *geom_data, t_img *img_data);
 void 	floor_ceiling(t_img *img, int f_color, int c_color);
 #endif
