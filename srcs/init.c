@@ -12,10 +12,6 @@
 
 #include "../includes/cub3d.h"
 
-int get_tex_color(t_img *img, int x, int y){
-    return (*(int *)(img->addr + (4 * texWidth * y) + (4 * x)));
-}
-
 void  img_init(t_data *data, t_img *img_data, size_t width, size_t height)
 {
 
@@ -44,8 +40,6 @@ void geom_init(t_geom *geom_data)
 }
 
 void texture_init(t_data *data){
-    //north
-    //img_init(data, &data->north_tex, data->geom_data.textureWidth, data->geom_data.textureHeight);
     data->north_tex->img = mlx_xpm_file_to_image(data->mlx, "textures/north.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
     data->north_tex->addr = (int *)mlx_get_data_addr(data->north_tex->img,
                                           &data->north_tex->bits_per_pixel, &data->north_tex->line_length,
@@ -55,27 +49,13 @@ void texture_init(t_data *data){
         exit (1);
     }
 
-    int color = get_tex_color(data->north_tex, 1, 1);
-    my_mlx_pixel_put(data->north_tex, 30, 30, color);
-    my_mlx_pixel_put(data->north_tex, 31, 30, color);
-    my_mlx_pixel_put(data->north_tex, 32, 30, color);
-    my_mlx_pixel_put(data->north_tex, 33, 30, color);
-    my_mlx_pixel_put(data->north_tex, 34, 30, color);
-    my_mlx_pixel_put(data->north_tex, 35, 30, color);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->north_tex->img, 0, 0);
-    //printf("%d\n", get_tex_color(data->north_tex, 30, 30));
-
-    //    //north
-//    img_init(data, &data->north_tex, data->geom_data.textureWidth, data->geom_data.textureHeight);
-//    data->north_tex = mlx_xpm_file_to_image(data->mlx, "textures/north.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
-//    data->north_tex->addr = (int *)mlx_get_data_addr(data->north_tex->img, &data->north_tex->bits_per_pixel, &data->north_tex->line_length,
-//                                          &data->north_tex->endian);
-//    if (!data->north_tex->img){
-//        ft_putstr_fd("texture_init\n", 2);
-//        exit (1);
-//    }
+//    int color = get_tex_color(data->north_tex, 1, 1);
+//    my_mlx_pixel_put(data->north_tex, 30, 30, color);
+//    my_mlx_pixel_put(data->north_tex, 31, 30, color);
+//    my_mlx_pixel_put(data->north_tex, 32, 30, color);
+//    my_mlx_pixel_put(data->north_tex, 33, 30, color);
+//    my_mlx_pixel_put(data->north_tex, 34, 30, color);
+//    my_mlx_pixel_put(data->north_tex, 35, 30, color);
 //    mlx_put_image_to_window(data->mlx, data->mlx_win, data->north_tex->img, 0, 0);
-//    printf("here\n");
-//    //sleep(10000);
 }
 

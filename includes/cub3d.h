@@ -86,6 +86,7 @@ int		key_hook(int keycode, t_data *data);
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 // возможно стоит отправлять указатель на массив картинок текстур
-void	walls(t_geom *geom_data, t_img *img_data);
+int get_tex_color(t_img *img, int x, int y);
+void	walls(t_data *data, t_geom *geom_data, t_img *img_data);
 void 	floor_ceiling(t_img *img, int f_color, int c_color);
 #endif
