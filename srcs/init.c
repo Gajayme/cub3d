@@ -39,23 +39,16 @@ void geom_init(t_geom *geom_data)
   geom_data->textureWidth = texWidth;
 }
 
-void texture_init(t_data *data){
-    data->north_tex->img = mlx_xpm_file_to_image(data->mlx, "textures/north.xpm", &data->geom_data.textureWidth, &data->geom_data.textureHeight);
-    data->north_tex->addr = (int *)mlx_get_data_addr(data->north_tex->img,
-                                          &data->north_tex->bits_per_pixel, &data->north_tex->line_length,
-                                          &data->north_tex->endian);
-    if (!data->north_tex->img){
+void texture_init(t_data *data, t_img *img, char *path)
+{
+    img->img = mlx_xpm_file_to_image(data->mlx, path, &data->geom_data.textureWidth, &data->geom_data.textureHeight);
+    img->addr = mlx_get_data_addr(img->img,
+                                          &img->bits_per_pixel, &img->line_length,
+                                          &img->endian);
+    if (!img->img){
         ft_putstr_fd("texture_init\n", 2);
         exit (1);
     }
-
-//    int color = get_tex_color(data->north_tex, 1, 1);
-//    my_mlx_pixel_put(data->north_tex, 30, 30, color);
-//    my_mlx_pixel_put(data->north_tex, 31, 30, color);
-//    my_mlx_pixel_put(data->north_tex, 32, 30, color);
-//    my_mlx_pixel_put(data->north_tex, 33, 30, color);
-//    my_mlx_pixel_put(data->north_tex, 34, 30, color);
-//    my_mlx_pixel_put(data->north_tex, 35, 30, color);
-//    mlx_put_image_to_window(data->mlx, data->mlx_win, data->north_tex->img, 0, 0);
+    printf("here\n");
 }
 

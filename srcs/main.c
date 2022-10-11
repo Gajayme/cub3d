@@ -77,7 +77,10 @@ int main()
   data.mlx_win = mlx_new_window(data.mlx, screenWidth, screenHeight, "Cub3D");
   geom_init(&data.geom_data);
 
-  texture_init(&data);
+  texture_init(&data, &data.north_tex, "textures/north.xpm");
+  texture_init(&data, &data.south_tex, "textures/south.xpm");
+  texture_init(&data, &data.west_tex, "textures/west.xpm");
+  texture_init(&data, &data.east_tex, "textures/east.xpm");
 
   mlx_hook(data.mlx_win, 2, 1L << 0, key_hook, &data);
   mlx_hook(data.mlx_win, 17, 0, red_cross, &data);

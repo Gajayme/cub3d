@@ -21,7 +21,7 @@ int get_tex_color(t_img *img, int x, int y)
     return (*(int *)(img->addr + (4 * texWidth * y) + (4 * x)));
 }
 
-void  vertical_line(t_img *img, int x, int y_low, int y_high, int color)
+void vertical_line(t_img *img, int x, int y_low, int y_high, int color)
 {
   for (int i = y_low; i <= y_high; ++i){
     my_mlx_pixel_put(img, x, i, color);
@@ -193,8 +193,23 @@ void walls (t_data *data, t_geom *geom_data, t_img *img_data)
         {
             int texY = (int)texPos & (texHeight - 1);
             texPos += step;
-            //printf("%d, %d\n", texX, texY);
-            int color = get_tex_color(data->north_tex, texX, texY);
+            int color = 0;
+            if (texNum == 0)
+            {
+                color = get_tex_color(data->south_tex, texX, texY);
+            }
+            else if (texNum == 1)
+            {
+                color = get_tex_color(data->north_tex, texX, texY);
+            }
+            else if (texNum == 2)
+            {
+                color = get_tex_color(data->east_tex, texX, texY);
+            }
+            else
+            {
+                color = get_tex_color(data->west_tex, texX, texY);
+            }
             my_mlx_pixel_put(img_data, x, y, color);
         }
 

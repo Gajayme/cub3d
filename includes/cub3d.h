@@ -67,6 +67,9 @@ typedef struct	s_data {
 	t_img	img_data;
 	t_geom	geom_data;
     t_img	*north_tex;
+    t_img	*south_tex;
+    t_img	*west_tex;
+    t_img	*east_tex;
 	int		floor_color;
 	int		ceiling_color;
 
@@ -75,7 +78,8 @@ typedef struct	s_data {
 void	geom_init(t_geom *geom_data);
 int		create_trgb(int t, int r, int g, int b);
 void	img_init(t_data *data, t_img *img_data, size_t width, size_t height);
-void    texture_init(t_data *data);
+void    texture_init(t_data *data, t_img *img, char *path);
+//void    texture_init(t_data *data);
 
 int		red_cross();
 void	move_forward(t_geom *geom_data);
@@ -86,7 +90,7 @@ int		key_hook(int keycode, t_data *data);
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 // возможно стоит отправлять указатель на массив картинок текстур
-int get_tex_color(t_img *img, int x, int y);
+int     get_tex_color(t_img *img, int x, int y);
 void	walls(t_data *data, t_geom *geom_data, t_img *img_data);
 void 	floor_ceiling(t_img *img, int f_color, int c_color);
 #endif
