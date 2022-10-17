@@ -6,213 +6,77 @@
 /*   By: georgii <georgii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 20:52:09 by georgii           #+#    #+#             */
-/*   Updated: 2022/09/11 17:51:02 by georgii          ###   ########.fr       */
+/*   Updated: 2022/10/17 11:43:05 by georgii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-#include <math.h>
+extern int	worldMap[mapWidth][mapHeight];
 
-extern int worldMap[mapWidth][mapHeight];
-
-int get_tex_color(t_img *img, int x, int y)
+int	get_tex_color(t_img *img, int x, int y)
 {
-    return (*(int *)(img->addr + (4 * texWidth * y) + (4 * x)));
+	return (*(int *)(img->addr + (4 * texWidth * y) + (4 * x)));
 }
 
-void vertical_line(t_img *img, int x, int y_low, int y_high, int color)
+void	floor_ceiling(t_img *img, int f_color, int c_color)
 {
-  for (int i = y_low; i <= y_high; ++i){
-    my_mlx_pixel_put(img, x, i, color);
-  }
+	int	height;
+	int	width;
+	int	half_screen;
+
+	height = 0;
+	half_screen = screenHeight / 2;
+	while (height < screenHeight)
+	{
+		width = 0;
+		while (width < screenWidth)
+		{
+			if (height < half_screen)
+				my_mlx_pixel_put(img, width, height, c_color);
+			else
+				my_mlx_pixel_put(img, width, height, f_color);
+			width ++;
+		}
+		height ++;
+	}
 }
 
-void floor_ceiling(t_img *img, int f_color, int c_color)
+int	texture_picker(int side, double ray_dir_x, double ray_dir_y)
 {
-  int height;
-  int width;
-  int half_screen;
-  
-  height = 0;
-  half_screen = screenHeight / 2;
-  
-  while (height < screenHeight)
-  {
-    width = 0;
-    while (width < screenWidth)
-    {
-      if (height < half_screen)
-        my_mlx_pixel_put(img, width, height, c_color);
-      else 
-        my_mlx_pixel_put(img, width, height, f_color);
-    width ++;
-    }
-    height ++;    
-  } 
+	if (side == 0)
+	{
+		if (ray_dir_x >= 0)
+			return (0); //south
+		else
+			return (1); //north
+	}
+	if (ray_dir_y > 0)
+		return (2); //east
+	else
+		return (3); //west
 }
 
-void color_picker(int *color, int side, double rayDirX, double rayDirY){
-  if (side == 0){
-    if (rayDirX >= 0)
-      *color = red;
-    else
-     *color = blue;
-    return;
-  }
-  if (rayDirY > 0 )
-    *color = yellow;
-  else
-    *color = green;
-  
-}
-
-int texture_picker(int side, double rayDirX, double rayDirY){
-  if (side == 0){
-    if (rayDirX >= 0) //south
-        return 0;
-    else //north
-        return 1;
-  }
-  if (rayDirY > 0 ) //east
-      return 2;
-  else //west
-      return 3;
-}
-
-//int get_tex_color(t_img *img, int x, int y){
-//    return (*(int *)(img->addr + ((4 * texHeight * y) + (4 * x))));
-//}
-
-void walls (t_data *data, t_geom *geom_data, t_img *img_data)
+void	walls(t_data *data, t_geom *geom, t_img *img)
 {
-    for(int x = 0; x < screenWidth; x++)
-    {
-        //calculate ray position and direction
-        double cameraX = 2 * (x / (double)screenWidth) - 1; //x-coordinate in camera space
-        double rayDirX = geom_data->dirX + geom_data->planeX * cameraX;
-        double rayDirY = geom_data->dirY + geom_data->planeY * cameraX;
-        //which box of the map we're in
-        int mapX = (int)geom_data->posX;
-        int mapY = (int)geom_data->posY;    
-        //length of ray from current position to next x or y-side
-        double sideDistX;
-        double sideDistY;
-    
-        double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-        double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-    
-        double perpWallDist;
-    
-        //what direction to step in x or y-direction (either +1 or -1)
-        int stepX;
-        int stepY;
-    
-        int hit = 0; //was there a wall hit?
-        int side; //was a NS or a EW wall hit? 0 - x 1 - y
-        //calculate step and initial sideDist
-        if(rayDirX < 0)
-        {
-          stepX = -1;
-          sideDistX = (geom_data->posX - mapX) * deltaDistX;
-        }
-        else
-        {
-          stepX = 1;
-          sideDistX = (mapX + 1.0 - geom_data->posX) * deltaDistX;
-        }
-        if(rayDirY < 0)
-        {
-          stepY = -1;
-          sideDistY = (geom_data->posY - mapY) * deltaDistY;
-        }
-        else
-        {
-          stepY = 1;
-          sideDistY = (mapY + 1.0 - geom_data->posY) * deltaDistY;
-        }
-        //perform DDA
-        while(hit == 0)
-        {
-          //jump to next map square, either in x-direction, or in y-direction
-          if(sideDistX < sideDistY)
-          {
-            sideDistX += deltaDistX;
-            mapX += stepX;
-            side = 0;
-          }
-          else
-          {
-            sideDistY += deltaDistY;
-            mapY += stepY;
-            side = 1;
-          }
-          //Check if ray has hit a wall
-          if(worldMap[mapX][mapY] > 0) hit = 1;
-        }
-        if(side == 0) perpWallDist = (sideDistX - deltaDistX);
-        else          perpWallDist = (sideDistY - deltaDistY);
-    
-        //Calculate height of line to draw on screen
-        int lineHeight = (int)(screenHeight / perpWallDist);
-    
-        //calculate lowest and highest pixel to fill in current stripe
-        int drawStart = -lineHeight / 2 + screenHeight / 2;
-        if(drawStart < 0) drawStart = 0;
-        int drawEnd = lineHeight / 2 + screenHeight / 2;
-        if(drawEnd >= screenHeight) drawEnd = screenHeight - 1;
-    
-        //choose wall color
-        int color;
-        color_picker(&color, side, rayDirX, rayDirY);
+	int	tex_num;
+	int	tex_y;
+	int	color;
 
-        int texNum = texture_picker(side, rayDirX, rayDirY);
-
-        //calculate value of wallX
-        double wallX; //where exactly the wall was hit
-        if (side == 0)
-            wallX = geom_data->posY + perpWallDist * rayDirY;
-        else
-            wallX = geom_data->posX + perpWallDist * rayDirX;
-        wallX -= floor((wallX));
-
-        //CALCULATING TEXTURE X
-
-        //x coordinate on the texture
-        int texX = (int)(wallX * (double)(geom_data->textureWidth));
-        if(side == 0 && rayDirX > 0)
-            texX = geom_data->textureWidth - texX - 1;
-        if(side == 1 && rayDirY < 0)
-            texX = geom_data->textureWidth - texX - 1;
-
-        // How much to increase the texture coordinate per screen pixel
-        //Коэффициент соответствия пикселя картинки пикселям линии на экране
-        double step = 1.0 * geom_data->textureHeight / lineHeight;
-        double texPos = (drawStart - screenHeight / 2 + lineHeight / 2) * step;
-        for(int y = drawStart; y<drawEnd; ++y)
-        {
-            int texY = (int)texPos & (texHeight - 1);
-            texPos += step;
-            int color = 0;
-            if (texNum == 0)
-            {
-                color = get_tex_color(data->south_tex, texX, texY);
-            }
-            else if (texNum == 1)
-            {
-                color = get_tex_color(data->north_tex, texX, texY);
-            }
-            else if (texNum == 2)
-            {
-                color = get_tex_color(data->east_tex, texX, texY);
-            }
-            else
-            {
-                color = get_tex_color(data->west_tex, texX, texY);
-            }
-            my_mlx_pixel_put(img_data, x, y, color);
-        }
-
-        //vertical_line(img_data, x, drawStart, drawEnd, color);
-  } 
+	for(int x = 0; x < screenWidth; x++)
+	{
+		ray_pos_dir(x, geom);
+		step_initial_side_dist(geom);
+		perform_dda(geom);
+		draw_start_end(geom);
+		wall_x(geom);
+		tex_num = texture_picker(geom->side, geom->ray_dir_x, geom->ray_dir_y);
+		for(int y = geom->draw_start; y < geom->draw_end; ++y)
+		{
+			tex_y = (int)geom->tex_pos & (texHeight - 1);
+			geom->tex_pos += geom->step;
+			color = get_tex_color(&data->tex[tex_num], geom->tex_x, tex_y);
+			my_mlx_pixel_put(img, x, y, color);
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: georgii <georgii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 18:53:09 by georgii           #+#    #+#             */
-/*   Updated: 2022/09/04 17:07:19 by georgii          ###   ########.fr       */
+/*   Updated: 2022/10/17 11:47:57 by georgii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,66 @@
 
 #include <math.h>
 
-extern int worldMap[mapWidth][mapHeight];
+extern int	worldMap[mapWidth][mapHeight];
 
-
-void move_forward(t_geom *geom_data)
-{   
-    if(worldMap[(int)(geom_data->posX + geom_data->dirX * geom_data->moveSpeed)][(int)geom_data->posY] ==  0)
-    {    
-        geom_data->posX += geom_data->dirX * geom_data->moveSpeed;
-    }
-    if(worldMap[(int)geom_data->posX][(int)(geom_data->posY + geom_data->dirY * geom_data->moveSpeed)] == 0) 
-    {
-        geom_data->posY += geom_data->dirY * geom_data->moveSpeed;
-        
-    }
+void	move_forward(t_geom *geom_data)
+{
+	if (worldMap[(int)(geom_data->pos_x + geom_data->dir_x
+			* geom_data->move_speed)][(int)geom_data->pos_y] == 0)
+	{
+		geom_data->pos_x += geom_data->dir_x * geom_data->move_speed;
+	}
+	if (worldMap[(int)geom_data->pos_x][(int)(geom_data->pos_y
+		+ geom_data->dir_y * geom_data->move_speed)] == 0)
+	{
+		geom_data->pos_y += geom_data->dir_y * geom_data->move_speed;
+	}
 }
 
-void move_backward(t_geom *geom_data)
+void	move_backward(t_geom *geom_data)
 {
-    if(worldMap[(int)(geom_data->posX - geom_data->dirX * geom_data->moveSpeed)][(int)geom_data->posY] == 0)
-    {
-        geom_data->posX -= geom_data->dirX * geom_data->moveSpeed;
-    }
-    if(worldMap[(int)geom_data->posX][(int)(geom_data->posY - geom_data->dirY * geom_data->moveSpeed)] == 0)
-    {
-        geom_data->posY -= geom_data->dirY * geom_data->moveSpeed;    
-    }    
+	if (worldMap[(int)(geom_data->pos_x - geom_data->dir_x
+			* geom_data->move_speed)][(int)geom_data->pos_y] == 0)
+	{
+		geom_data->pos_x -= geom_data->dir_x * geom_data->move_speed;
+	}
+	if (worldMap[(int)geom_data->pos_x][(int)(geom_data->pos_y
+		- geom_data->dir_y * geom_data->move_speed)] == 0)
+	{
+		geom_data->pos_y -= geom_data->dir_y * geom_data->move_speed;
+	}
 }
 
-void rotate_left(t_geom *geom_data)
+void	rotate_left(t_geom *geom_data)
 {
-    double oldDirX = geom_data->dirX;
-    geom_data->dirX = geom_data->dirX * cos(geom_data->rotSpeed) - geom_data->dirY * sin(geom_data->rotSpeed);
-    geom_data->dirY = oldDirX * sin(geom_data->rotSpeed) + geom_data->dirY * cos(geom_data->rotSpeed);
-    double oldPlaneX = geom_data->planeX;
-    geom_data->planeX = geom_data->planeX * cos(geom_data->rotSpeed) - geom_data->planeY * sin(geom_data->rotSpeed);
-    geom_data->planeY = oldPlaneX * sin(geom_data->rotSpeed) + geom_data->planeY * cos(geom_data->rotSpeed);    
+	double	old_dir_x;
+	double	oldplane_x;
+
+	old_dir_x = geom_data->dir_x;
+	geom_data->dir_x = geom_data->dir_x * cos(geom_data->rot_speed)
+		- geom_data->dir_y * sin(geom_data->rot_speed);
+	geom_data->dir_y = old_dir_x * sin(geom_data->rot_speed)
+		+ geom_data->dir_y * cos(geom_data->rot_speed);
+	oldplane_x = geom_data->plane_x;
+	geom_data->plane_x = geom_data->plane_x * cos(geom_data->rot_speed)
+		- geom_data->plane_y * sin(geom_data->rot_speed);
+	geom_data->plane_y = oldplane_x * sin(geom_data->rot_speed)
+		+ geom_data->plane_y * cos(geom_data->rot_speed);
 }
 
-void rotate_right(t_geom *geom_data)
+void	rotate_right(t_geom *geom_data)
 {
-    double oldDirX = geom_data->dirX;
-    geom_data->dirX = geom_data->dirX * cos(-geom_data->rotSpeed) - geom_data->dirY * sin(-geom_data->rotSpeed);
-    geom_data->dirY = oldDirX * sin(-geom_data->rotSpeed) + geom_data->dirY * cos(-geom_data->rotSpeed);
-    double oldPlaneX = geom_data->planeX;
-    geom_data->planeX = geom_data->planeX * cos(-geom_data->rotSpeed) - geom_data->planeY * sin(-geom_data->rotSpeed);
-    geom_data->planeY = oldPlaneX * sin(-geom_data->rotSpeed) + geom_data->planeY * cos(-geom_data->rotSpeed);
-    
+	double	old_dir_x;
+	double	oldplane_x;
+
+	old_dir_x = geom_data->dir_x;
+	geom_data->dir_x = geom_data->dir_x * cos(-geom_data->rot_speed)
+		- geom_data->dir_y * sin(-geom_data->rot_speed);
+	geom_data->dir_y = old_dir_x * sin(-geom_data->rot_speed)
+		+ geom_data->dir_y * cos(-geom_data->rot_speed);
+	oldplane_x = geom_data->plane_x;
+	geom_data->plane_x = geom_data->plane_x * cos(-geom_data->rot_speed)
+		- geom_data->plane_y * sin(-geom_data->rot_speed);
+	geom_data->plane_y = oldplane_x * sin(-geom_data->rot_speed)
+		+ geom_data->plane_y * cos(-geom_data->rot_speed);
 }
