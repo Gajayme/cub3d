@@ -23,10 +23,14 @@ int	key_hook(int keycode, t_data *data)
 		move_forward(&data->geom_data);
 	if (keycode == 1)
 		move_backward(&data->geom_data);
-	if (keycode == 0)
+	if (keycode == 123) // 0
 		rotate_left(&data->geom_data);
-	if (keycode == 2)
+	if (keycode == 124) // 2
 		rotate_right(&data->geom_data);
+    if (keycode == 0)
+        strafe_left(&data->geom_data);
+    if (keycode == 2)
+        strafe_right(&data->geom_data);
 	if (keycode == 53)
 		exit (0);
 	return (0);

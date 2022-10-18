@@ -101,6 +101,8 @@ void	move_forward(t_geom *geom_data);
 void	move_backward(t_geom *geom_data);
 void	rotate_left(t_geom *geom_data);
 void	rotate_right(t_geom *geom_data);
+void    strafe_left(t_geom *geom_data);
+void	strafe_right(t_geom *geom_data);
 int		key_hook(int keycode, t_data *data);
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);

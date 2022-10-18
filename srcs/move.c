@@ -77,3 +77,53 @@ void	rotate_right(t_geom *geom_data)
 	geom_data->plane_y = oldplane_x * sin(-geom_data->rot_speed)
 		+ geom_data->plane_y * cos(-geom_data->rot_speed);
 }
+
+void	strafe_right(t_geom *geom_data)
+{
+    double tmp_x = geom_data->dir_y;
+    double tmp_y = -geom_data->dir_x;
+
+    if (worldMap[(int)(geom_data->pos_x + tmp_x
+                                          * geom_data->move_speed)][(int)geom_data->pos_y] == 0)
+    {
+        geom_data->pos_x += tmp_x * geom_data->move_speed;
+    }
+    if (worldMap[(int)geom_data->pos_x][(int)(geom_data->pos_y
+                                              + tmp_y * geom_data->move_speed)] == 0)
+    {
+        geom_data->pos_y += tmp_y * geom_data->move_speed;
+    }
+}
+
+void	strafe_left(t_geom *geom_data)
+{
+    double tmp_x = -geom_data->dir_y;
+    double tmp_y = geom_data->dir_x;
+
+    if (worldMap[(int)(geom_data->pos_x + tmp_x
+                                          * geom_data->move_speed)][(int)geom_data->pos_y] == 0)
+    {
+        geom_data->pos_x += tmp_x * geom_data->move_speed;
+    }
+    if (worldMap[(int)geom_data->pos_x][(int)(geom_data->pos_y
+                                              + tmp_y * geom_data->move_speed)] == 0)
+    {
+        geom_data->pos_y += tmp_y * geom_data->move_speed;
+    }
+}
+
+//void strafe_left(t_geom *geom_data)
+//{
+//    double strafe_x = geom_data->dir_x * cos(90) - geom_data->dir_y * sin(90);
+//    double strafe_y = geom_data->dir_x * sin(90) + geom_data->dir_y * cos(90);
+//    if (worldMap[(int)(geom_data->pos_x + strafe_x
+//                                          * geom_data->move_speed)][(int)geom_data->pos_y] == 0)
+//    {
+//        geom_data->pos_x += strafe_x * geom_data->move_speed;
+//    }
+//    if (worldMap[(int)geom_data->pos_x][(int)(geom_data->pos_y
+//                                              + strafe_y * geom_data->move_speed)] == 0)
+//    {
+//        geom_data->pos_y += strafe_y * geom_data->move_speed;
+//    }
+//}
