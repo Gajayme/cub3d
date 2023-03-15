@@ -1,5 +1,6 @@
 .vscode
 a.out
+.*
 *.o
 maps
 .DS_Store
